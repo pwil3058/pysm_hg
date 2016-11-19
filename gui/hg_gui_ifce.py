@@ -13,7 +13,7 @@
 ### along with this program; if not, write to the Free Software
 ### Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
 
-'''SCM interface for Mercurial (hg)'''
+"""SCM interface for Mercurial (hg)"""
 
 import errno
 import hashlib
@@ -88,7 +88,7 @@ class Mercurial:
     @staticmethod
     def __getattr__(attr_name):
         if attr_name == "is_available":
-            '''Is the currend working directory in a valid git repository?'''
+            """Is the currend working directory in a valid git repository?"""
             try:
                 return runext.run_cmd(["hg", "version"]).is_ok
             except OSError as edata:
@@ -99,7 +99,7 @@ class Mercurial:
         if attr_name == "in_valid_wspce": return runext.run_cmd(["hg", "root"]).is_ok
     @staticmethod
     def dir_is_in_valid_pgnd(dir_path=None):
-        '''Is the current working (or specified) directory in a valid hg repository?'''
+        """Is the current working (or specified) directory in a valid hg repository?"""
         if dir_path:
             orig_dir_path = os.getcwd()
             os.chdir(dir_path)
@@ -109,9 +109,9 @@ class Mercurial:
         return result.is_ok
     @staticmethod
     def copy_clean_version_to(file_path, target_name):
-        '''
+        """
         Copy a clean version of the named file to the specified target
-        '''
+        """
         contents = runext.run_get_cmd(["hg", "cat", file_path])
         if contents:
             # TODO: should this be conditional on contents not being empty?
@@ -236,7 +236,7 @@ class Mercurial:
     @staticmethod
     def do_rollback_repo():
         # TODO: remove rollback from interface: deprecated and dangerous add amend instead
-        result = _run_do_cmd('hg rollback')
+        result = _run_do_cmd("hg rollback")
         enotify.notify_events(scm.E_CS_CHANGES|scm.E_WD_CHANGES)
         return result
     @staticmethod
@@ -288,10 +288,10 @@ class Mercurial:
         return h.digest()
     @staticmethod
     def get_files_with_uncommitted_changes(files=None):
-        '''
+        """
         Get the subset of files which have uncommitted hg changes.  If files
         is None assume all files in current directory.
-        '''
+        """
         cmd = ["hg", "status", "-mardn"] + (list(files) if files else ["."])
         return runext.run_get_cmd(cmd, sanitize_stderr=lambda x: NOSUCH_RE.sub("", x)).splitlines()
     @staticmethod
@@ -325,7 +325,7 @@ class Mercurial:
         return [[int(pdata[0])] + pdata[1:] for pdata in (line.split(":", 6) for line in runext.run_get_cmd(cmd, default="").splitlines())]
     @staticmethod
     def get_path_table_data():
-        path_re = re.compile('^(\S*)\s+=\s+(\S*.*)\s*$')
+        path_re = re.compile("^(\S*)\s+=\s+(\S*.*)\s*$")
         cmd = ["hg", "paths"]
         return [[match.group(1), match.group(2)] for match in (path_re.match(line) for line in runext.run_get_cmd(cmd).splitlines()) if match]
     @staticmethod
@@ -333,10 +333,10 @@ class Mercurial:
         return runext.run_get_cmd(["hg", "root"], default=None)
     @staticmethod
     def get_revision(file_path=None):
-        '''
+        """
         Return the SCM revision for the named file or the whole playground
         if the file_path is None
-        '''
+        """
         cmd = ["hg", "log", "-l", "1", "--follow", "--template", "\"{node}\""]
         if file_path:
             cmd.append(file_path)
@@ -370,9 +370,9 @@ class Mercurial:
         return tag_list
     @staticmethod
     def get_wd_file_db():
-        '''
+        """
         Get the SCM view of the current directory
-        '''
+        """
         return fsdb_hg_mq.WsFileDb()
     @staticmethod
     def is_ready_for_import():

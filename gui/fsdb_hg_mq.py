@@ -25,30 +25,30 @@ from ...patch_diff import patchlib
 
 from ...gtx import fsdb
 
-FSTATUS_MODIFIED = 'M'
-FSTATUS_ADDED = 'A'
-FSTATUS_REMOVED = 'R'
-FSTATUS_CLEAN = 'C'
-FSTATUS_MISSING = '!'
-FSTATUS_NOT_TRACKED = '?'
-FSTATUS_IGNORED = 'I'
-FSTATUS_ORIGIN = ' '
-FSTATUS_UNRESOLVED = 'U'
+FSTATUS_MODIFIED = "M"
+FSTATUS_ADDED = "A"
+FSTATUS_REMOVED = "R"
+FSTATUS_CLEAN = "C"
+FSTATUS_MISSING = "!"
+FSTATUS_NOT_TRACKED = "?"
+FSTATUS_IGNORED = "I"
+FSTATUS_ORIGIN = " "
+FSTATUS_UNRESOLVED = "U"
 
 FSTATUS_MODIFIED_SET = frozenset([FSTATUS_MODIFIED, FSTATUS_ADDED, FSTATUS_REMOVED, FSTATUS_MISSING, FSTATUS_UNRESOLVED])
 FSTATUS_CLEAN_SET = frozenset([FSTATUS_IGNORED, FSTATUS_CLEAN, None])
 FSTATUS_MARDUC_SET = frozenset([FSTATUS_MODIFIED, FSTATUS_ADDED, FSTATUS_REMOVED, FSTATUS_MISSING, FSTATUS_NOT_TRACKED, FSTATUS_CLEAN])
 
 _STATUS_DECO_MAP = {
-    None: fsdb.Deco(Pango.Style.NORMAL, 'black'),
-    FSTATUS_CLEAN: fsdb.Deco(Pango.Style.NORMAL, 'black'),
-    FSTATUS_MODIFIED: fsdb.Deco(Pango.Style.NORMAL, 'blue'),
-    FSTATUS_ADDED: fsdb.Deco(Pango.Style.NORMAL, 'darkgreen'),
-    FSTATUS_REMOVED: fsdb.Deco(Pango.Style.NORMAL, 'red'),
-    FSTATUS_UNRESOLVED: fsdb.Deco(Pango.Style.NORMAL, 'magenta'),
-    FSTATUS_MISSING: fsdb.Deco(Pango.Style.ITALIC, 'pink'),
-    FSTATUS_NOT_TRACKED: fsdb.Deco(Pango.Style.ITALIC, 'cyan'),
-    FSTATUS_IGNORED: fsdb.Deco(Pango.Style.ITALIC, 'grey'),
+    None: fsdb.Deco(Pango.Style.NORMAL, "black"),
+    FSTATUS_CLEAN: fsdb.Deco(Pango.Style.NORMAL, "black"),
+    FSTATUS_MODIFIED: fsdb.Deco(Pango.Style.NORMAL, "blue"),
+    FSTATUS_ADDED: fsdb.Deco(Pango.Style.NORMAL, "darkgreen"),
+    FSTATUS_REMOVED: fsdb.Deco(Pango.Style.NORMAL, "red"),
+    FSTATUS_UNRESOLVED: fsdb.Deco(Pango.Style.NORMAL, "magenta"),
+    FSTATUS_MISSING: fsdb.Deco(Pango.Style.ITALIC, "pink"),
+    FSTATUS_NOT_TRACKED: fsdb.Deco(Pango.Style.ITALIC, "cyan"),
+    FSTATUS_IGNORED: fsdb.Deco(Pango.Style.ITALIC, "grey"),
 }
 
 class FileData(fsdb.FileData):
