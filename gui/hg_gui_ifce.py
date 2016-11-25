@@ -91,11 +91,8 @@ class Mercurial:
             """Is the currend working directory in a valid git repository?"""
             try:
                 return runext.run_cmd(["hg", "version"]).is_ok
-            except OSError as edata:
-                if edata.errno == errno.ENOENT:
-                    return False
-                else:
-                    raise
+            except FileNotFoundError:
+                return False
         if attr_name == "in_valid_wspce": return runext.run_cmd(["hg", "root"]).is_ok
     @staticmethod
     def dir_is_in_valid_pgnd(dir_path=None):

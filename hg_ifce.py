@@ -35,11 +35,8 @@ class Interface:
         if attr_name == "is_available":
             try:
                 return runext.run_cmd(["hg", "version"]).is_ok
-            except OSError as edata:
-                if edata.errno == errno.ENOENT:
-                    return False
-                else:
-                    raise
+            except FileNotFoundError:
+                return False
         if attr_name == "in_valid_wspce": return runext.run_cmd(["hg", "root"]).is_ok
         raise AttributeError(attr_name)
     @staticmethod
