@@ -21,7 +21,7 @@ from ...bab import runext
 from ...bab import os_utils
 from ...bab import utils
 
-from ...patch_diff import patchlib
+from ...patch_diff import patches
 
 from ...gtx import fsdb
 
@@ -180,15 +180,15 @@ class CombinedPatchFileDb(TopPatchFileDb):
         return "qparent" if runext.run_get_cmd(["hg", "qapplied"], default="") else None
 
 PATCHLIB_TO_STATUS_MAP = {
-    patchlib.FilePathPlus.ADDED : FSTATUS_ADDED,
-    patchlib.FilePathPlus.DELETED: FSTATUS_REMOVED,
-    patchlib.FilePathPlus.EXTANT: FSTATUS_MODIFIED
+    patches.FilePathPlus.ADDED : FSTATUS_ADDED,
+    patches.FilePathPlus.DELETED: FSTATUS_REMOVED,
+    patches.FilePathPlus.EXTANT: FSTATUS_MODIFIED
 }
 
-def iterate_patchlib_file_data(patch_text):
+def iterate_patches_file_data(patch_text):
     if not patch_text:
         return
-    for fdata in patchlib.Patch.parse_text(patch_text).iterate_file_paths_plus(1):
+    for fdata in patches.Patch.parse_text(patch_text).iterate_file_paths_plus(1):
         yield (fdata.path, PATCHLIB_TO_STATUS_MAP[fdata.status], fdata.expath)
 
 class PatchFileDb(fsdb.GenericPatchFileDb):
@@ -217,4 +217,4 @@ class PatchFileDb(fsdb.GenericPatchFileDb):
         if self._is_applied:
             return iterate_hg_file_data((pdt, ""), [])
         else:
-            return iterate_patchlib_file_data(pdt)
+            return iterate_patches_file_data(pdt)

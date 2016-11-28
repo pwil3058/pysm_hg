@@ -24,8 +24,6 @@ import re
 
 from ..bab import runext
 
-from ..patch_diff import patchlib
-
 NOSUCH_RE = re.compile(_("^.*: No such file or directory$\n?"), re.M)
 
 class Interface:
